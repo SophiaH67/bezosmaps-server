@@ -13,12 +13,12 @@ export class BlocksService {
     return this.blocks.find(block => block.x === x);
   }
 
-  create(block: Block): Block {
+  store(block: Block): Block {
     this.blocks.push(block);
     return block;
   }
 
-  store(block: Block): Block {
+  update(block: Block): Block {
     const index = this.blocks.findIndex(b => b.x === block.x);
     this.blocks[index] = block;
     return block;

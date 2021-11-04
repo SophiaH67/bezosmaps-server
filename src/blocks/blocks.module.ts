@@ -8,5 +8,6 @@ import { BlocksService } from './blocks.service';
   imports: [MongooseModule.forFeature([{ name: Block.name, schema: BlockSchema }])],
   controllers: [BlocksController],
   providers: [BlocksService],
+  exports: [BlocksService],
 })
 export class BlocksModule {}

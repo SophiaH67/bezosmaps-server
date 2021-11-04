@@ -1,10 +1,15 @@
-import { Controller, Get } from '@nestjs/common'
-import Block from 'src/interfaces/block'
+import { Body, Controller, Get, Post } from '@nestjs/common'
+import CreateBlockDto from './block-dto.dto'
 
 @Controller('blocks')
 export class BlocksController {
   @Get()
-  findAll(): Block[] {
+  findAll(): CreateBlockDto[] {
     return []
+  }
+
+  @Post()
+  store(@Body() block: CreateBlockDto): CreateBlockDto {
+    return block
   }
 }

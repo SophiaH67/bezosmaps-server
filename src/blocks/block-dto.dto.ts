@@ -1,4 +1,4 @@
-export default interface Block {
+export default class CreateBlockDto {
   name: string
   state?: {
     waterlogged?: boolean

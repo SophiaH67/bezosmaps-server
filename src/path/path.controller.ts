@@ -3,7 +3,6 @@ import { Controller, Get, Param, ParseIntPipe } from '@nestjs/common';
 function calculatePath(endNode: Node): string {
   const path: string[] = [];
   let currentNode: Node = endNode;
-  console.log(endNode)
   while (currentNode) {
     path.push(`${currentNode.x},${currentNode.y},${currentNode.z}`);
     currentNode = currentNode.parent;

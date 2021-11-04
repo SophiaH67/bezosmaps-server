@@ -14,8 +14,8 @@ describe('BlocksService', () => {
   });
 
   it('should store blocks', () => {
-    let testBlock: CreateBlockDto = { name: "minecraft:stone", x: 0, y: 0, z: 0};
+    let testBlock: CreateBlockDto = { name: "minecraft:stone", x: 123, y: 12, z: 31};
     expect(service.store(testBlock)).toBeDefined();
-    expect(service.findOne(testBlock.x)).toEqual(testBlock)
+    expect(service.findOne(testBlock.x, testBlock.y, testBlock.z)).toEqual(testBlock)
   });
 });

@@ -9,8 +9,8 @@ export class BlocksService {
     return this.blocks;
   }
 
-  findOne(x: number): Block {
-    return this.blocks.find(block => block.x === x);
+  findOne(x: number, y: number, z: number): Block {
+    return this.blocks.find(block => block.x === x && block.y === y && block.z === z)
   }
 
   store(block: Block): Block {

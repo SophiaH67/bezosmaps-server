@@ -3,6 +3,7 @@ import { Controller, Get, Param, ParseIntPipe } from '@nestjs/common';
 function calculatePath(endNode: Node): string {
   const path: string[] = [];
   let currentNode: Node = endNode;
+  console.log(endNode)
   while (currentNode) {
     path.push(`${currentNode.x},${currentNode.y},${currentNode.z}`);
     currentNode = currentNode.parent;
@@ -74,21 +75,16 @@ export class PathController {
       const startNode = new Node(x, y, z, 0, 0, null);
       const endNode = new Node(tx, ty, tz, 0, 0, null);
 
+      startNode.calculateH(endNode);
+
       let closestNode = startNode
 
-      startNode.calculateH(endNode);
       const openList: Node[] = [startNode];
       const closedList: Node[] = [];
       while (openList.length > 0) {
         const currentNode = openList.shift() as Node;
         if (currentNode.isEqualTo(endNode)) {
-          const path: Node[] = [];
-          let current = currentNode;
-          while (current !== null) {
-            path.push(current);
-            current = current.parent;
-          }
-          resolve(path.reverse().map(node => `${node.x},${node.y},${node.z}`).join(';'));
+          resolve(calculatePath(currentNode));
           return;
         }
         closedList.push(currentNode);
@@ -106,6 +102,7 @@ export class PathController {
           let openNode = openList.find(node => node.isEqualTo(neighbor));
           if (openNode === undefined) {
             openNode = neighbor;
+            openNode.parent = currentNode;
             openList.push(openNode);
           }
           if (g < openNode.g) {

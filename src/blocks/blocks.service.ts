@@ -21,7 +21,7 @@ export class BlocksService {
   }
 
   async update(block: Block): Promise<Block> {
-    return this.blockModel.findByIdAndUpdate({ x: block.x, y: block.y, z: block.z }, block).exec()
+    return this.blockModel.findOneAndUpdate({ x: block.x, y: block.y, z: block.z }, block)
   }
 
 }

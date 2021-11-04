@@ -14,8 +14,11 @@ export class BlocksController {
 
   @Post()
   async store(@Body() block: CreateBlockDto): Promise<CreateBlockDto> {
-    console.log(block)
-    return this.blockService.store(block)
+    if (this.blockService.findOne(block.x, block.y, block.z)) {
+      return this.blockService.update(block)
+    } else {
+      return this.blockService.store(block)
+    }
   }
 
   @Get('/:x/:y/:z')

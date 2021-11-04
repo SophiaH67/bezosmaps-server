@@ -6,9 +6,6 @@ export default class CreateBlockDto {
     facing?: string
     [key: string]: any
   }
-  tags?: {
-    [key: string]: any
-  }
   x: number
   y: number
   z: number

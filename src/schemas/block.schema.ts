@@ -8,26 +8,20 @@ export class Block {
   @Prop()
   name: string
 
-  @Prop()
+  @Prop({ type: { type: String, waterlogged: Boolean, facing: String} })
   state?: {
     waterlogged?: boolean
     powered?: boolean
     facing?: string
-    [key: string]: any
   }
 
-  @Prop()
-  tags?: {
-    [key: string]: any
-  }
-
-  @Prop()
+  @Prop({ required: true, index: true, unique: true })
   x: number
 
-  @Prop()
+  @Prop({ required: true, index: true, unique: true })
   y: number
 
-  @Prop()
+  @Prop({ required: true, index: true, unique: true })
   z: number
 }
 

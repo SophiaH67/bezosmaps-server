@@ -1,4 +1,5 @@
-import { Body, Controller, Get, Post } from '@nestjs/common'
+import { Body, Controller, Get, Param, ParseIntPipe, Post } from '@nestjs/common'
+import { Block } from '../schemas/block.schema'
 import { BlocksService } from './blocks.service'
 import CreateBlockDto from './interfaces/block-dto.dto'
 
@@ -7,12 +8,19 @@ export class BlocksController {
   constructor(private readonly blockService: BlocksService) {}
 
   @Get()
-  findAll(): CreateBlockDto[] {
+  async findAll(): Promise<Block[]> {
     return this.blockService.findAll()
   }
 
   @Post()
-  store(@Body() block: CreateBlockDto): CreateBlockDto {
+  async store(@Body() block: CreateBlockDto): Promise<CreateBlockDto> {
+    console.log(block)
     return this.blockService.store(block)
   }
+
+  @Get('/:x/:y/:z')
+  async findOne(@Param('x', ParseIntPipe) x, @Param('y', ParseIntPipe) y, @Param('z', ParseIntPipe) z): Promise<Block> {
+    return this.blockService.findOne(x, y, z)
+  }
+
 }

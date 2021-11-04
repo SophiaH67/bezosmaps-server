@@ -1,26 +1,27 @@
 import { Injectable } from '@nestjs/common';
-import { Block } from '../schemas/block.schema';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { Block, BlockDocument } from '../schemas/block.schema';
 
 @Injectable()
 export class BlocksService {
-  private readonly blocks: Block[] = [];
+  constructor(@InjectModel(Block.name) private blockModel: Model<BlockDocument>) {}
 
-  findAll(): Block[] {
-    return this.blocks;
+  async findAll(): Promise<Block[]> {
+    return this.blockModel.find().exec()
   }
 
-  findOne(x: number, y: number, z: number): Block {
-    return this.blocks.find(block => block.x === x && block.y === y && block.z === z)
+  async store(block: Block): Promise<Block> {
+    const newBlock = new this.blockModel(block);
+    return newBlock.save();
   }
 
-  store(block: Block): Block {
-    this.blocks.push(block);
-    return block;
+  async findOne(x: number, y: number, z: number): Promise<Block> {
+    return (await this.blockModel.findOne({ x, y, z }).exec()) || { name: "marnix:404", x, y, z }
   }
 
-  update(block: Block): Block {
-    const index = this.blocks.findIndex(b => b.x === block.x);
-    this.blocks[index] = block;
-    return block;
+  async update(block: Block): Promise<Block> {
+    return this.blockModel.findByIdAndUpdate({ x: block.x, y: block.y, z: block.z }, block).exec()
   }
+
 }
